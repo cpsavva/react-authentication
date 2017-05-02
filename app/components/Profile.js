@@ -8,9 +8,18 @@ import {Link} from 'react-router';
 class Profile extends React.Component{
 	constructor(props){
 		super(props);
-
-
-
+		this.state={
+			user: [],
+		}
+	}
+	componentDidMount () {
+  		authmiddle.showUserInfo()
+    	.then((data) => {
+    	// console.log('did mount' + '' + data)
+    		this.setState({
+    			user: data
+    		})
+  		})  
 	}
 
 	render(){
@@ -28,7 +37,10 @@ class Profile extends React.Component{
 		        <div className="col-sm-6">
 		            <div className="well">
 		                <h3><span className="fa fa-user"></span> Local</h3>
-
+		                	<p>
+		                	<strong>name</strong>: {{this.state.user.name}}<br/>
+		                	<strong>condition</strong>: {{this.state.user.condition}}<br/>
+		                	<strong>favourite snack</strong>: {{this.state.user.favouriteSnack}}<br/>
 		                   {/* <p>
 		                        <strong>id</strong>: {{user._id}}<br/>
 		                        <strong>email</strong>: {{user.local.email}}<br/>

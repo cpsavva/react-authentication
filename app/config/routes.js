@@ -7,19 +7,22 @@ import {Route, Router, IndexRoute, browserHistory,hashHistory} from 'react-route
 import * as RR from 'react-router';
 // console.log(RR);
 // Reference the high-level components
-import Wrapper from "../components/Wrapper";
+{/*import Wrapper from "../components/Wrapper";
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import Profile from '../components/Profile';
-import Main from '../components/Main';
-
+import Main from '../components/Main';*/}
+import routes from './routes.js';
 
 
 // Export the Routes
 export default (
+<Router history={browserHistory} routes={routes}/>
+
 
   // The high level component is the Router component
-  <Router history={hashHistory}>
+
+ {/*<Router history={hashHistory}>
     <Route path="/" component={Wrapper}>
     	<Route path="/main" component={Main}/>
       <Route path='/login' component={Login}/>
@@ -27,7 +30,7 @@ export default (
       <Route path='/profile' component={Profile}/>
 		<IndexRoute component={Main} />
 	</Route>
-  </Router>
+  </Router>*/}
 
 
 );

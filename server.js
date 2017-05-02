@@ -31,8 +31,8 @@ app.use(passport.initialize());
 
 const authCheckMiddleware = require('./server/middleware/auth-check');
 app.use('/api', authCheckMiddleware);
-const authRoutes = require('./server/passport/auth')(app,passport, validator);
-const apiRoutes = require('./server/passport/api')(app,passport, validator);
+const authRoutes = require('./server/passport/auth')(app,passport);
+const apiRoutes = require('./server/passport/api')(app);
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 require('./server/passport.js')(app, passport);

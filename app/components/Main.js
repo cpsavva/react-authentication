@@ -10,13 +10,7 @@ class Main extends React.Component {
   render() {
     return (
     <div>
-      <div className="container"><h1>Main Component</h1>
-        <ol className="lead">
-            <li><Link to="/signup">Registration</Link></li>
-            <li><Link to='/login'>Login</Link></li>
-            <li><Link to="/profile">Custom Profile Data</Link></li>
-        </ol>
-      </div>
+        <h1>Hello this is Main component</h1>
       <div className="container">{this.props.children}</div>
       </div>
     );

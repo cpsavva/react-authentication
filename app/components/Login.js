@@ -9,7 +9,8 @@ class Login extends React.Component{
 		super(props);
 			this.state = {
 				email: '',
-				password: ''
+				password: '',
+				user: []
 			}
 
 	this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +22,10 @@ class Login extends React.Component{
 			password: ''
 		});
 		authmiddle.getLogin(this.state).then((doc)=> { console.log('this.state '+ this.state)
-		});
+			this.setState({
+				user: this.state.user.concat([doc]),
+			})
+		};
 	}
 	handleInputChange(event){
 		const target = event.target;

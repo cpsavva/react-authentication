@@ -6,17 +6,19 @@ import {Link} from 'react-router';
 
 
 class SignUp extends React.Component{
-	constructor(props){
-		super(props);
+	constructor(props, context){
+		super(props, context);
 		this.state = {
 			email: '',
 			password: '',
-			name: '',
+			name: ''
 			condition: '',
-			favouriteSnack: ''
+			favouriteSnack: '',
+			user: [],
 		}
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
+	this.changeUser = this.changeUser.bind(this);
 	}
 	handleSubmit(){
 		this.setState({
@@ -26,10 +28,18 @@ class SignUp extends React.Component{
 			condition: '',
 			favouriteSnack: ''
 		});
+
+
+
 		authmiddle.getSignup(this.state).then((doc)=> {
 			console.log('this.state '+ this.state)
-		});
+			this.context.router.replace('/login');
+			this.setState({
+		 	   	user: this.state.user.concat([doc]),
+   		 	});
+		};
 	}
+
 	handleInputChange(event){
 		const target = event.target;
 		const value = target.value;

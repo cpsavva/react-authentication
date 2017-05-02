@@ -1,3 +1,7 @@
+var validator = require('validator');
+
+
+
 function validateSignupForm(payload) {
   const errors = {};
   let isFormValid = true;
@@ -62,7 +66,7 @@ function validateLoginForm(payload) {
   };
 }
 
-module.exports = function(app, passport, validator) {
+module.exports = function(app) {
 
 
 app.post('/signup', (req, res, next) => {
