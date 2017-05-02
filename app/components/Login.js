@@ -16,11 +16,16 @@ class Login extends React.Component{
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
 	};
-	handleSubmit(){
+	handleSubmit(event){
 		this.setState({
 			email: '',
 			password: ''
 		});
+		const email = encodeURIComponent(this.state.user.email);
+		const password = encodeURIComponent(this.state.user.password);
+  		const formData = `email=${email}&password=${password}`;
+
+  		axios.post('/auth/login',{headers: blahblah}).then(console.log('the form is valid') return send(formData))
 		authmiddle.getLogin(this.state).then((doc)=> { console.log('this.state '+ this.state)
 			this.setState({
 				user: this.state.user.concat([doc]),

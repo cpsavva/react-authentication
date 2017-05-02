@@ -36,7 +36,7 @@ class SignUp extends React.Component{
     	const formData = `name=${name}&email=${email}&password=${password}&condition=${condition}&favouriteSnack=${favouriteSnack}`;
 
 
-
+    	axios.post('/auth/signup',{'headers' 'blah blah'}, ).then( {console.log('the form is valid')} return 'send formData').catch('error stuff')
 
 		authmiddle.getSignup(this.state).then((doc)=> {
 			console.log('this.state '+ this.state)

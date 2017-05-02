@@ -12,20 +12,10 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
-        process.nextTick(function() {
-
-        User.findOne({ 'local.email' :  email }, function(err, user) {
-            if (err)
-                return done(err);
-
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
-
                 const newUser = new User();
 
                 newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password);
+                newUser.local.password = generateHash(password);
                 newUser.local.name = req.body.name;
                 newUser.local.condition = req.body.condition;
                 newUser.local.favouriteSnack = req.body.favouriteSnack;

@@ -20,35 +20,27 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname _ '/app'))
+app.use(express.static(__dirname + '/app'));
 
-
-
-const authRoutes = require ('./server/routes/auth')(app);
-app.use('/auth', authRoutes);
-
-
-
-
-
-
-
-
-
-
-
-//PASSPORT
-app.use(cookieParser());
-app.use(session({secret: 'makeanallybeanally'}));
+//======= PASSPORT======
 app.use(passport.initialize());
 
-const authCheckMiddleware = require('./server/middleware/auth-check');
-app.use('/api', authCheckMiddleware);
-const authRoutes = require('./server/passport/auth')(app,passport);
-const apiRoutes = require('./server/passport/api')(app);
+//passport strategies
+const localSignupStrat = require('./server/passport/local-signup');
+const localLoginStrat = require('./server/passport/local-login');
+passport.use('local-signup', localSignupStrat);
+passport.use('local-login', localLoginStrat);
+
+//passport middleware
+const passmiddle = require('./server/middleware/auth-check');
+
+//passport routes
+const authRoutes = require('./server/passportRoutes/auth')(app, passport);
+const apiRoutes = require('./server/routes/api')(app);
 app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
-require('./server/passport.js')(app, passport);
+app.use('./api,', apiRoutes);
+//=====END OF PASSPORT ====//
+
 
 
 // ========= MONGOOSE ==========//
