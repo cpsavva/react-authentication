@@ -20,7 +20,7 @@ class SignUp extends React.Component{
 	this.handleInputChange = this.handleInputChange.bind(this);
 	this.changeUser = this.changeUser.bind(this);
 	}
-	handleSubmit(){
+	handleSubmit(event){
 		this.setState({
 			email: '',
 			password: '',
@@ -28,6 +28,13 @@ class SignUp extends React.Component{
 			condition: '',
 			favouriteSnack: ''
 		});
+
+		event.preventDefault();
+		const name = encodeURIComponent(this.state.user.name);
+    	const email = encodeURIComponent(this.state.user.email);
+    	const password = encodeURIComponent(this.state.user.password);
+    	const formData = `name=${name}&email=${email}&password=${password}&condition=${condition}&favouriteSnack=${favouriteSnack}`;
+
 
 
 

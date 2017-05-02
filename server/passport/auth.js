@@ -77,6 +77,8 @@ app.post('/signup', (req, res, next) => {
       message: validationResult.message,
       errors: validationResult.errors
     });
+
+    return res.status(200).end();
   }
 
 
@@ -117,6 +119,7 @@ app.post('/login', (req, res, next) => {
       message: validationResult.message,
       errors: validationResult.errors
     });
+     return res.status(200).end();
   }
 
 

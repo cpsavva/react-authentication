@@ -20,8 +20,21 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname _ '/app'))
 
-mongoose.Promise = Promise;
+
+
+const authRoutes = require ('./server/routes/auth')(app);
+app.use('/auth', authRoutes);
+
+
+
+
+
+
+
+
+
 
 
 //PASSPORT
@@ -37,7 +50,10 @@ app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 require('./server/passport.js')(app, passport);
 
-// Database configuration for mongoose
+
+// ========= MONGOOSE ==========//
+mongoose.Promise = Promise;
+
 if (process.env.MONGODB_URI){
 	mongoose.connect(process.env.MONGODB_URI)
 } else {
@@ -57,6 +73,9 @@ db.on("error", function(error) {
 db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
+// =====END OF MONGOOSE =========
+
+
 
 
 app.get('/', function(req,res){
