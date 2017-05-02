@@ -4,7 +4,6 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var axios = require('axios');
 var passport = require('passport');
-var passport= require('passport-local');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -26,9 +25,9 @@ mongoose.Promise = Promise;
 //PASSPORT
 app.use(cookieParser());
 app.use(session({secret: 'make an ally be an ally'}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(flash());
 
 
 // Database configuration for mongoose
@@ -36,7 +35,7 @@ if (process.env.MONGODB_URI){
 	mongoose.connect(process.env.MONGODB_URI)
 } else {
 
-// db: CancerAlliance
+// db: authTest
 mongoose.connect("mongodb://localhost/authTest");
 }
 // Hook mongoose connection to db
@@ -52,8 +51,8 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-require('./server/authroutes.js')(app);
-require('./server/passport.js')(app, passport);
+// require('./server/authroutes.js')(app);
+// require('./server/passport.js')(app, passport);
 
 app.get('/', function(req,res){
 	res.sendFile(path.join(__dirname, '/public/index.html'))

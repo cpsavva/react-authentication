@@ -11,6 +11,8 @@ import Wrapper from "../components/Wrapper";
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import Profile from '../components/Profile';
+import Main from '../components/Main';
+
 
 
 // Export the Routes
