@@ -39,7 +39,7 @@ var authmiddle = {
 
 	showUserInfo: function() {
         return axios.get('/api/profile').then(function(response) {
-                // console.log("this is docform;table " + response.data);
+                console.log('made it to authmiddle '+ response.data);
                 return response.data
             })
             .catch(function(error) {

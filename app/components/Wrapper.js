@@ -1,5 +1,5 @@
 import React from "react";
-
+import Auth from '../config/Auth.js';
 class Wrapper extends React.Component {
   constructor() {
     super();
