@@ -10,6 +10,7 @@ class Wrapper extends React.Component {
     return (
 
     	<div>{this.props.children}</div>
+
     );
   }
 }

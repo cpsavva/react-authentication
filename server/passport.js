@@ -1,19 +1,21 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/User.js');
+const jwt = require('jsonwebtoken');
+const jwtSecret = 'makeanallybeanally';
 
 module.exports = function(passport) {
 
-    // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
+    // // used to serialize the user for the session
+    // passport.serializeUser(function(user, done) {
+    //     done(null, user.id);
+    // });
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
-    });
+    // // used to deserialize the user
+    // passport.deserializeUser(function(id, done) {
+    //     User.findById(id, function(err, user) {
+    //         done(err, user);
+    //     });
+    // });
 
     passport.use('local-signup', new LocalStrategy({
         usernameField : 'email',
@@ -32,7 +34,7 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
             } else {
 
-                var newUser = new User();
+                const newUser = new User();
 
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password);
@@ -76,8 +78,13 @@ module.exports = function(passport) {
                 return done(null, false)
                  // req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
-            // all is well, return successful user
-            return done(null, user);
+
+            // all is well, return successful user and token
+            const token = jwt.sign(payload, jwtSecret);
+            const data = {
+                name: user.name
+            }
+            return done(null, token, data);
         });
 
     }));

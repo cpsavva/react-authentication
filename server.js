@@ -7,6 +7,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var validator = require('validator')
 
 // Create a new express app
 var app = express();
@@ -22,13 +23,19 @@ app.use(express.static(__dirname + '/public'));
 
 mongoose.Promise = Promise;
 
+
 //PASSPORT
 app.use(cookieParser());
-app.use(session({secret: 'make an ally be an ally'}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(flash());
+app.use(session({secret: 'makeanallybeanally'}));
+app.use(passport.initialize());
 
+const authCheckMiddleware = require('./server/middleware/auth-check');
+app.use('/api', authCheckMiddleware);
+const authRoutes = require('./server/passport/auth')(app,passport, validator);
+const apiRoutes = require('./server/passport/api')(app,passport, validator);
+app.use('/auth', authRoutes);
+app.use('/api', apiRoutes);
+require('./server/passport.js')(app, passport);
 
 // Database configuration for mongoose
 if (process.env.MONGODB_URI){
@@ -51,8 +58,6 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-// require('./server/authroutes.js')(app);
-// require('./server/passport.js')(app, passport);
 
 app.get('/', function(req,res){
 	res.sendFile(path.join(__dirname, '/public/index.html'))
@@ -62,3 +67,5 @@ app.get('/', function(req,res){
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
+
+
