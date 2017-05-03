@@ -11,43 +11,21 @@ class SignUp extends React.Component{
 		this.state = {
 			email: '',
 			password: '',
-			name: ''
-			condition: '',
-			favouriteSnack: '',
-			user: [],
+			user: []
 		}
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
-	this.changeUser = this.changeUser.bind(this);
 	}
 	handleSubmit(event){
-		this.setState({
-			email: '',
-			password: '',
-			name: '',
-			condition: '',
-			favouriteSnack: ''
-		});
-
-		// event.preventDefault();
-		// const name = encodeURIComponent(this.state.user.name);
-  //   	const email = encodeURIComponent(this.state.user.email);
-  //   	const password = encodeURIComponent(this.state.user.password);
-  //   	const formData = `name=${name}&email=${email}&password=${password}&condition=${condition}&favouriteSnack=${favouriteSnack}`;
-
-
-  //   	axios
-  //   	  .post('/auth/signup',
-  //   	  	{'headers' 'blah blah'}, 
-  //   	 ).then( {console.log('the form is valid')} return 'send formData').catch('error stuff')
-
-		authmiddle.getSignup(this.state).then((doc)=> {
-			console.log('this.state '+ this.state);
-			this.context.router.replace('/login');
+		authmiddle.getSignup(this.state)
+		.then((doc)=> {
+			console.log('what do i get back? ' + doc)
 			this.setState({
-		 	   	user: this.state.user.concat([doc]),
-   		 	});
-		};
+
+    		user: this.state.info.concat([doc]),
+    		});
+		})
+
 	}
 
 	handleInputChange(event){
@@ -82,9 +60,9 @@ class SignUp extends React.Component{
 			            <label htmpFor="password">Password</label>
 			            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange}/>
 			        </div>
-			         <div className="form-group">
-			            <label htmlFor='name'>Name</label>
-			            <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleInputChange}/>
+			         {/*<div className="form-group">
+			            <label htmlFor='profname'>Name</label>
+			            <input type="text" className="form-control" name="profname" value={this.state.profname} onChange={this.handleInputChange}/>
 			        </div>
 			         <div className="form-group">
 			            <label htmlFor='condition'>condition</label>
@@ -93,7 +71,7 @@ class SignUp extends React.Component{
 			         <div className="form-group">
 			            <label htmlFor='favouriteSnack'>Favourite Snack</label>
 			            <input type="text" className="form-control" name="favouriteSnack" value={this.state.favouriteSnack} onChange={this.handleInputChange}/>
-			        </div>
+			        </div>*/}
 
 			        <button type="submit" className="btn btn-warning btn-lg" onClick={this.handleSubmit}>Signup</button>
 			    </form>

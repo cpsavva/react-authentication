@@ -4,7 +4,7 @@ var authmiddle = {
 
 	getLogin: function(data){
 		// console.log('made it to authmiddle');
-		return axios.post('/auth/login'{
+		return axios.post('/auth/login',{
 			email: data.email,
 			password: password,
 
@@ -19,7 +19,7 @@ var authmiddle = {
 
 	getSignup: function(data){
 			// console.log('made it to authmiddle');
-		return axios.post('/auth/signup',{
+		return axios.post('/signup',{
 			email: data.email,
 			password: data.password,
 			name: data.name,
@@ -37,15 +37,15 @@ var authmiddle = {
 
 	},
 
-	showUserInfo: function() {
-        return axios.get('/api/profile').then(function(response) {
-                console.log('made it to authmiddle '+ response.data);
-                return response.data
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
-    },
+	// showUserInfo: function() {
+ //        return axios.get('/api/profile').then(function(response) {
+ //                console.log('made it to authmiddle '+ response.data);
+ //                return response.data
+ //            })
+ //            .catch(function(error) {
+ //                console.log(error);
+ //            });
+ //    },
 };
 
 module.exports = authmiddle;

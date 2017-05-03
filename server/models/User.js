@@ -14,31 +14,15 @@ var userSchema = mongoose.Schema({
 });
 
 // methods ======================
-userSchema.methods.comparePassword = function comparePassword(password, callback) {
-  bcrypt.compare(password, this.password, callback);
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-userSchema.pre('save', function saveHook(next) {
- 	const user = this;
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
 
- // proceed further only if the password is modified or the user is new
- 	if (!user.isModified('password')) return next();
-
-	return bcrypt.genSalt((saltError, salt) => {
-
-		if (saltError) { return next(saltError); }
-
- 		return bcrypt.hash(user.password, salt, (hashError, hash) => {
-
-	 		if (hashError) { return next(hashError); }
-
- // replace a password string with hash value
- 			user.password = hash;
-
-			return next();
-		});
- 	});
-});
 
 module.exports = mongoose.model('User', userSchema);
 
