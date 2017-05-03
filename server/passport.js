@@ -3,45 +3,37 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User.js');
 
 
-
-
-
-
-
-
-
-
 module.exports = (passport)=> {
 
-	passport.serializeUser((user, done)=>{
-		return done(null, user.id);
+	passport.serializeUser(function(user, done){
+		done(null, user.id);
 	});
 
-	passport.deserializeUser((id, done)=>{
-		return User.findById(id, (err, user)=>{
-			return done(err, user);
+	passport.deserializeUser(function(id, done){
+		User.findById(id, function(err, user){
+			done(err, user);
 		});
 	});
 
 	//SIGNUP STRATEGY
 
 	passport.use('local-signup', new LocalStrategy({
-		usernameField: 'email',
+		usernameField: 'username',
 		passwordField: 'password',
 		passReqtoCallback: true //allows for whole req to be passed back
-	}, function(req, email, password, done){
-
-		process.nextTick(()=>{
-			return User.findOne({'local.email': email}, (err,user)=>{
-				if(err) return done(err);
+	}, function(username, password, done){
+		console.log('req '+ req + ' username ' + username + ' password ' + password)
+		process.nextTick(function(){
+			User.findOne({'username': username}, function(err, user){
+				if(err) return done (err);
 
 				if(user){
-					done(null, false. req.flash('signupMessage', 'That email is already taken.'))
+					return done(null, false. req.flash('signupMessage', 'That email is already taken.'))
 				} else {
 					var newUser = new User();
 
-					newUser.local.email = email;
-					newUser.local.password = newUser.generateHash(password);
+					newUser.username = username;
+					newUser.password = password;
 					// newUser.local.profname = req.body.profname;
 					// newUser.local.condition = req.body.condition;
 					// newUser.local.favouriteSnack = req.body.favouriteSnack;
@@ -50,7 +42,7 @@ module.exports = (passport)=> {
 					newUser.save(function(err){
 						if(err) throw err;
 
-						return  done(null, newUser)
+						console.log('saved!');
 					});
 				}
 				
@@ -62,23 +54,25 @@ module.exports = (passport)=> {
 	//LOGIN STRATEGY
 
 	passport.use('local-login', new LocalStrategy({
-		usernameField: 'email',
+		usernameField: 'username',
 		passwordField: 'password',
 		passReqtoCallback: true
-	}, (req, email, password, done)=>{
-		User.findOne({'local.email': email}, (err, user) => {
+	}, function(username, password, done){
+		User.findOne({'username': username}, function(err, user){
 
-			if(err){return doner(err)};
+			if(err){return done(err)};
 
 			if(!user){
-				return done(null, false, req.flash('loginMessage', 'No user found'));
-			};
+				console.log('not user')
+				return done(null, false);
+			} else {
 
-			if(!user.validPassword(password)){
-				return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+				user.comparePassword(password, function(err, isMatch) {
+		            if (err) throw err;
+		            console.log('password', isMatch)
+		        })
 			}
-			else{
-			return done(null, user);}
+			return done(null, user);
 		});
 
 	}

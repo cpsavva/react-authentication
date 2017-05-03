@@ -9,7 +9,7 @@ class SignUp extends React.Component{
 	constructor(props, context){
 		super(props, context);
 		this.state = {
-			email: '',
+			username: '',
 			password: '',
 			user: []
 		}
@@ -53,8 +53,8 @@ class SignUp extends React.Component{
 
 			    <form action="#/signup" method="post">
 			        <div className="form-group">
-			            <label htmlFor='email'>Email</label>
-			            <input type="text" className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange}/>
+			            <label htmlFor='username'>username</label>
+			            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleInputChange}/>
 			        </div>
 			        <div className="form-group">
 			            <label htmpFor="password">Password</label>

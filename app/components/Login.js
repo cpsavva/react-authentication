@@ -8,21 +8,24 @@ class Login extends React.Component{
 	constructor(props){
 		super(props);
 			this.state = {
-				email: '',
+				username: '',
 				password: '',
+				user: []
 			}
 
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
 	};
 	handleSubmit(event){
-		this.setState({
-			email: '',
-			password: '',
-		});
-		authmiddle.getLogin(this.state).then((doc)=> {console.log('what do i get back? ' + doc)})
+		console.log(this.state)
+		authmiddle.getLogin(this.state).then((doc)=> {
+			console.log('what do i get back? ' + doc)
+			this.setState({
 
-		}
+    		user: this.state.user.concat([doc]),
+    		});
+		})
+	}
 
 		
 	handleInputChange(event){
@@ -49,8 +52,8 @@ class Login extends React.Component{
 
 			    <form>
 			        <div className="form-group">
-			            <label htmlFor='email'>Email</label>
-			            <input type="text" className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange}/>
+			            <label htmlFor='username'>username</label>
+			            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleInputChange}/>
 			        </div>
 			        <div className="form-group">
 			            <label htmlFor='password'>Password</label>

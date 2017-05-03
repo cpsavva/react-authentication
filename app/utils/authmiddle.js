@@ -4,9 +4,10 @@ var authmiddle = {
 
 	getLogin: function(data){
 		// console.log('made it to authmiddle');
-		return axios.post('/auth/login',{
+		console.log(data.email + " "+ data.password)
+		return axios.post('/login',{
 			email: data.email,
-			password: password,
+			password: data.password,
 
 		}).then(function (response){
 			console.log('authmiddle '+ response.data)
@@ -22,14 +23,10 @@ var authmiddle = {
 		return axios.post('/signup',{
 			email: data.email,
 			password: data.password,
-			name: data.name,
-			condition: data.condition,
-			favouriteSnack: data.favouriteSnack
 
 		}).then((response) => {
 
-			console.log('authmiddle '+ response.data)
-			return response.data
+			console.log('authmiddle '+ response)
 
 		}).catch(function(error){
 			console.log(error);
