@@ -1,13 +1,6 @@
 const User = require('../models/User.js')
-const passLocStrat = ('passport-local').Strategy;
-
-
-module.exports = new passLocStrat({
-	usernameField : 'email',
-    passwordField : 'password',
-    session: false,
-    passReqToCallback : true
-}, (req, email, password, done) => {
+const passLocStrat = require('passport-local').Strategy;
+var localSignup = (req, email, password, done) => {
 
     const newUser = new User();
 
@@ -22,4 +15,15 @@ module.exports = new passLocStrat({
         
         return done(null, newUser);
     });
-});
+};
+
+
+module.exports = (passport) => {
+    passport.use('local-signup',new passLocStrat({
+    usernameField : 'email',
+    passwordField : 'password',
+    session: false,
+    passReqToCallback : true
+}, localSignup));
+}
+

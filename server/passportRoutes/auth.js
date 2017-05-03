@@ -66,7 +66,7 @@ function validateLoginForm(payload) {
   };
 }
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
 
 app.post('/signup', (req, res, next) => {

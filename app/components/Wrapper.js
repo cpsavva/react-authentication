@@ -13,7 +13,7 @@ class Wrapper extends React.Component {
     	<div>
     	    <div className="top-bar">
       			<div className="top-bar-left">
-        			<IndexLink to="/">Main</IndexLink>
+        			<Link to="/">Main</Link>
       			</div>
 
       		{Auth.isUserAuthenticated() ? (

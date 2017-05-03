@@ -7,8 +7,9 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var validator = require('validator')
-
+var validator = require('validator');
+var applyConfig = require('./server/passport');
+console.log(applyConfig)
 // Create a new express app
 var app = express();
 // Sets an initial port. We'll use this later in our listener
@@ -26,19 +27,22 @@ app.use(express.static(__dirname + '/app'));
 app.use(passport.initialize());
 
 //passport strategies
-const localSignupStrat = require('./server/passport/local-signup');
-const localLoginStrat = require('./server/passport/local-login');
-passport.use('local-signup', localSignupStrat);
-passport.use('local-login', localLoginStrat);
-
+// const localSignupStrat = require('./server/passport/local-signup');
+// const localLoginStrat = require('./server/passport/local-login');
+// passport.use('local-signup', localSignupStrat);
+// passport.use('local-login', localLoginStrat);
+applyConfig(passport);
 //passport middleware
 const passmiddle = require('./server/middleware/auth-check');
 
 //passport routes
 const authRoutes = require('./server/passportRoutes/auth')(app, passport);
-const apiRoutes = require('./server/routes/api')(app);
-app.use('/auth', authRoutes);
-app.use('./api,', apiRoutes);
+const apiRoutes = require('./server/passportRoutes/api')(app);
+
+// console.log(authRoutes)
+
+// app.use('/auth', authRoutes);
+// app.use('/api,', apiRoutes);
 //=====END OF PASSPORT ====//
 
 

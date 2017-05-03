@@ -29,17 +29,20 @@ class SignUp extends React.Component{
 			favouriteSnack: ''
 		});
 
-		event.preventDefault();
-		const name = encodeURIComponent(this.state.user.name);
-    	const email = encodeURIComponent(this.state.user.email);
-    	const password = encodeURIComponent(this.state.user.password);
-    	const formData = `name=${name}&email=${email}&password=${password}&condition=${condition}&favouriteSnack=${favouriteSnack}`;
+		// event.preventDefault();
+		// const name = encodeURIComponent(this.state.user.name);
+  //   	const email = encodeURIComponent(this.state.user.email);
+  //   	const password = encodeURIComponent(this.state.user.password);
+  //   	const formData = `name=${name}&email=${email}&password=${password}&condition=${condition}&favouriteSnack=${favouriteSnack}`;
 
 
-    	axios.post('/auth/signup',{'headers' 'blah blah'}, ).then( {console.log('the form is valid')} return 'send formData').catch('error stuff')
+  //   	axios
+  //   	  .post('/auth/signup',
+  //   	  	{'headers' 'blah blah'}, 
+  //   	 ).then( {console.log('the form is valid')} return 'send formData').catch('error stuff')
 
 		authmiddle.getSignup(this.state).then((doc)=> {
-			console.log('this.state '+ this.state)
+			console.log('this.state '+ this.state);
 			this.context.router.replace('/login');
 			this.setState({
 		 	   	user: this.state.user.concat([doc]),
