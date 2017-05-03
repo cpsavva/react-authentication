@@ -3,7 +3,7 @@
 module.exports = (app, passport) => {
 
 	app.post('/signup', passport.authenticate('local-signup',function(req, res){
-		console.log(req.user);
+		console.log('authmiddle' + req);
 		// res.send(req.user);
 	}));
 

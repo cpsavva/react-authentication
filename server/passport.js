@@ -22,9 +22,9 @@ module.exports = (passport)=> {
 		passwordField: 'password',
 		passReqtoCallback: true //allows for whole req to be passed back
 	}, function(username, password, done){
-		console.log('req '+ req + ' username ' + username + ' password ' + password)
+		console.log('username ' + username + ' password ' + password)
 		process.nextTick(function(){
-			User.findOne({'username': username}, function(err, user){
+			User.findOne({username: username}, function(err, user){
 				if(err) return done (err);
 
 				if(user){
