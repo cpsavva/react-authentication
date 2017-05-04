@@ -1,5 +1,4 @@
 import React from 'react';
-import authmiddle from '../utils/authmiddle.js';
 import {Link} from 'react-router';
 
 
