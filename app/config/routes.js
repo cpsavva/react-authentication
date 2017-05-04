@@ -23,7 +23,7 @@ export default (
  
  <Router history={hashHistory}>
     <Route path="/" component={Wrapper}>
-    	<Route path="/main" component={Main}/>
+    <Route path="/main" component={Main}/>
       <Route path='/login' component={Login}/>
       <Route path='/signup' component={Signup}/>
       <Route path='/profile' component={Profile}/>

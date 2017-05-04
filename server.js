@@ -3,10 +3,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var axios = require('axios');
-var passport = require('passport');
-var flash = require('connect-flash');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
 
 // Create a new express app
 var app = express();
@@ -18,13 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-//=========PASSPORT=============//
-app.use(session({secret: 'makeanallybeanally'}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-require('./server/passportRoutes.js')(app,passport);
-require('./server/passport.js')(passport);
 
 // ========= MONGOOSE ==========//
 mongoose.Promise = Promise;
