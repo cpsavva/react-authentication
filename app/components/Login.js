@@ -1,84 +1,57 @@
-import React from 'react';
-import authmiddle from '../utils/authmiddle.js';
-import {Link} from 'react-router';
+import React, { Component } from 'react'
+import { login, resetPassword } from '../utils/firehelp';
 
-
-
-class Login extends React.Component{
-	constructor(props){
-		super(props);
-			this.state = {
-				email: '',
-				password: '',
-				user: []
-			}
-
-	this.handleSubmit = this.handleSubmit.bind(this);
-	this.handleInputChange = this.handleInputChange.bind(this);
-	};
-	handleSubmit(event){
-		this.setState({
-			email: '',
-			password: ''
-		});
-		const email = encodeURIComponent(this.state.user.email);
-		const password = encodeURIComponent(this.state.user.password);
-  		const formData = `email=${email}&password=${password}`;
-
-  		axios.post('/auth/login',{headers: blahblah}).then(console.log('the form is valid') return send(formData))
-		authmiddle.getLogin(this.state).then((doc)=> { console.log('this.state '+ this.state)
-			this.setState({
-				user: this.state.user.concat([doc]),
-			})
-		};
-	}
-	handleInputChange(event){
-		const target = event.target;
-		const value = target.value;
-		const name = target.name;
-		this.setState({
-			[name]: value
-		});
-	}
-
-	render(){
-
-		return(
-			<div className="container">
-
-			<div className="col-sm-6 col-sm-offset-3">
-
-			    <h1><span className="fa fa-sign-in"></span> Login</h1>
-
-			    {/*{{#if message.length }}
-			        <div className="alert alert-danger">{{message}}</div>
-			    {{/if}}*/}
-
-			    <form>
-			        <div className="form-group">
-			            <label htmlFor='email'>Email</label>
-			            <input type="text" className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange}/>
-			        </div>
-			        <div className="form-group">
-			            <label htmlFor='password'>Password</label>
-			            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange}/>
-			        </div>
-			        
-
-			        <button type="submit" className="btn btn-warning btn-lg" onClick={this.handleSubmit}>Login</button>
-			    </form>
-
-			    <hr/>
-
-			    <p>Need an account? <Link to="/signup">Signup</Link></p>
-			    <p>Or go <Link to="/">home</Link>.</p>
-
-			</div>
-
-			</div>
-
-		)
-	}
+function setErrorMsg(error) {
+  return {
+    loginMessage: error
+  }
 }
 
-export default Login;
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loginMessage: null }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+  }
+  
+  handleSubmit(e){
+    e.preventDefault()
+    login(this.email.value, this.password.value)
+      .catch((error) => {
+          this.setState(setErrorMsg('Invalid username/password.'))
+        })
+  }
+  resetPassword(){
+    resetPassword(this.email.value)
+      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.email.value}.`)))
+      .catch((error) => this.setState(setErrorMsg(`Email address not found.`)))
+  }
+  render () {
+    return (
+      <div className="col-sm-6 col-sm-offset-3">
+        <h1> Login </h1>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input className="form-control" ref={(email) => this.email = email} placeholder="Email"/>
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" className="form-control" placeholder="Password" ref={(password) => this.password = password} />
+          </div>
+          {
+            this.state.loginMessage &&
+            <div className="alert alert-danger" role="alert">
+              <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span className="sr-only">Error:</span>
+              &nbsp;{this.state.loginMessage} <a href="#" onClick={this.resetPassword} className="alert-link">Forgot Password?</a>
+            </div>
+          }
+          <button type="submit" className="btn btn-primary">Login</button>
+        </form>
+      </div>
+    )
+  }
+}
